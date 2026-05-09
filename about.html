@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Subin</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #f6dfe5;
+            font-family: Georgia, serif;
+            color: #111;
+        }
+
+        .about-board {
+            width: 88%;
+            max-width: 1300px;
+            margin: 60px auto;
+            background: white;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 0 30px rgba(0,0,0,0.08);
+        }
+
+        .about-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 35px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .about-logo {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .language-buttons button {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 8px 14px;
+            margin-left: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .about-main {
+            display: grid;
+            grid-template-columns: 42% 58%;
+        }
+
+        .about-photo {
+            border-right: 1px solid #e5e5e5;
+            padding: 35px;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-content {
+            padding: 55px 65px;
+        }
+
+        .about-date {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 58px;
+            margin: 0 0 35px;
+            font-weight: normal;
+        }
+
+        #about-text {
+            font-size: 20px;
+            line-height: 1.9;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 30px 0;
+        }
+
+        .keyword-box {
+            margin-top: 28px;
+            font-size: 14px;
+            color: #555;
+            letter-spacing: 1px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 13px 30px;
+            border: 1px solid #111;
+            color: #111;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back-button:hover {
+            background: #111;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="about-board">
+
+        <div class="about-header">
+            <div class="about-logo">ABOUT SUBIN</div>
+
+            <div class="language-buttons">
+                <button onclick="setLanguage('ko')">Korean</button>
+                <button onclick="setLanguage('en')">English</button>
+                <button onclick="setLanguage('jp')">Japanese</button>
+            </div>
+        </div>
+
+        <div class="about-main">
+
+            <div class="about-photo">
+                <img src="images/profile.jpeg">
+            </div>
+
+            <div class="about-content">
+
+                <div class="about-date">May 09, 2026 / Profile Board</div>
+
+                <h1 id="title">ABOUT ME</h1>
+
+                <div id="about-text">
+                    안녕하세요.<br>
+                    기술과 사람을 연결하는 개발자를 목표로 하고 있는 이수빈입니다.
+                    <br><br>
+                    현재 Java와 Web Development를 공부하며 일본 IT 취업을 준비하고 있습니다.
+                    <br><br>
+                    일본 현지 근무 경험과 프론트엔드 및 시스템 운영 경험을 바탕으로
+                    사용자 관점의 문제 해결과 커뮤니케이션을 중요하게 생각합니다.
+                </div>
+
+                <div class="keyword-box">
+                    # Java # Web Development # Japan IT # Communication
+                </div>
+
+                <a href="index.html#main-site" class="back-button">
+                    Back
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function setLanguage(language) {
+            const text = document.getElementById("about-text");
+
+            if (language === "ko") {
+                text.innerHTML = `
+                    안녕하세요.<br>
+                    기술과 사람을 연결하는 개발자를 목표로 하고 있는 이수빈입니다.
+                    <br><br>
+                    현재 Java와 Web Development를 공부하며 일본 IT 취업을 준비하고 있습니다.
+                    <br><br>
+                    일본 현지 근무 경험과 프론트엔드 및 시스템 운영 경험을 바탕으로
+                    사용자 관점의 문제 해결과 커뮤니케이션을 중요하게 생각합니다.
+                `;
+            }
+
+            else if (language === "en") {
+                text.innerHTML = `
+                    Hello, I'm Lee Subin.<br>
+                    I aim to become a developer who connects technology and people.
+                    <br><br>
+                    I am currently studying Java and Web Development while preparing for an IT career in Japan.
+                    <br><br>
+                    Based on my experience in frontend support and system operations in Japan,
+                    I value problem-solving and communication from the user's perspective.
+                `;
+            }
+
+            else if (language === "jp") {
+                text.innerHTML = `
+                    こんにちは、イ・スビンです。<br>
+                    技術と人をつなぐ開発者を目指しています。
+                    <br><br>
+                    現在はJavaとWeb開発を勉強しながら、日本IT就職を準備しています。
+                    <br><br>
+                    日本での勤務経験とフロントエンド・システム運営経験を活かし、
+                    ユーザー視点の問題解決とコミュニケーションを大切にしています。
+                `;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

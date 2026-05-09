@@ -1,83 +1,43 @@
-function setLanguage(language){
-
+function setLanguage(language) {
     const title = document.getElementById("main-title");
-
     const intro = document.getElementById("intro-text");
+    if (!title || !intro) return;
 
-    if(language === "ko"){
+    if (language === "ko") {
         title.innerText = "이수빈 포트폴리오";
-
-        intro.innerText =
-        "개발과 언어를 공부하며 일본 IT 취업을 준비하고 있습니다.";
-    }
-
-    else if(language === "en"){
+        intro.innerText = "개발과 언어를 공부하며 일본 IT 취업을 준비하고 있습니다.";
+    } else if (language === "en") {
         title.innerText = "LEE SUBIN PORTFOLIO";
-
-        intro.innerText =
-        "Studying programming and languages while preparing for an IT career in Japan.";
-    }
-
-    else if(language === "jp"){
+        intro.innerText = "Studying programming and languages while preparing for an IT career in Japan.";
+    } else if (language === "jp") {
         title.innerText = "イ・スビン ポートフォリオ";
-
-        intro.innerText =
-        "開発と言語を勉強しながら、日本IT就職を目指しています。";
+        intro.innerText = "開発と言語を勉強しながら、日本IT就職を目指しています。";
     }
-
-}
-function openModal(image){
-
-    document.getElementById("modal").style.display = "block";
-
-    document.getElementById("modal-img").src = image.src;
 }
 
-function closeModal(){
-
-    document.getElementById("modal").style.display = "none";
-}
 function enterSite() {
-    const hero = document.querySelector(".hero-opening");
-    const mainSite = document.getElementById("main-site");
+    const opening = document.querySelector(".hero-opening");
 
-    hero.classList.add("fade-out");
+    if (opening) {
+        opening.classList.add("fade-out");
 
-    setTimeout(function() {
-        hero.style.display = "none";
-        mainSite.classList.remove("hidden");
-    }, 800);
+        setTimeout(function () {
+            opening.style.display = "none";
+        }, 800);
+    }
 }
+
 window.onload = function () {
+    const today = new Date();
 
-    const opened = sessionStorage.getItem("opened");
+    const dateStr =
+        today.getFullYear() + "." +
+        String(today.getMonth() + 1).padStart(2, "0") + "." +
+        String(today.getDate()).padStart(2, "0");
 
-    if (opened === "yes") {
+    const dateElement = document.getElementById("today-date");
 
-        document.querySelector(".hero-opening").style.display = "none";
-
-        document.getElementById("main-site")
-        .classList.remove("hidden");
+    if (dateElement) {
+        dateElement.innerText = dateStr;
     }
 };
-
-function enterSite() {
-
-    sessionStorage.setItem("opened", "yes");
-
-    const hero =
-    document.querySelector(".hero-opening");
-
-    const mainSite =
-    document.getElementById("main-site");
-
-    hero.classList.add("fade-out");
-
-    setTimeout(function () {
-
-        hero.style.display = "none";
-
-        mainSite.classList.remove("hidden");
-
-    }, 800);
-}
