@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subin Java Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <div class="logo">SUBINLEE</div>
+
+            <nav>
+                <a href="index.html">HOME</a>
+                <a href="#">BLOG</a>
+                <a href="#">ABOUT</a>
+                <a href="game.html">GAME</a>
+                <a href="#">CONTACT</a>
+            </nav>
+        </header>
+
+        <div class="language-buttons">
+            <button onclick="setGameLanguage('ko')">🇰🇷</button>
+            <button onclick="setGameLanguage('en')">🇺🇸</button>
+            <button onclick="setGameLanguage('jp')">🇯🇵</button>
+        </div>
+
+        <section class="game-box">
+            <h1 id="game-title">Java 퀴즈 게임</h1>
+
+            <p id="game-intro">
+                Java 기초 문제를 풀어보세요 ☕
+            </p>
+
+            <h2 id="question">문제가 여기에 나옵니다.</h2>
+
+            <div class="answer-box">
+                <button onclick="checkAnswer(0)" id="btn0"></button>
+                <button onclick="checkAnswer(1)" id="btn1"></button>
+                <button onclick="checkAnswer(2)" id="btn2"></button>
+            </div>
+
+            <p id="result"></p>
+            <p id="score">Score: 0</p>
+
+            <button class="next-btn" onclick="nextQuestion()" id="next-btn">
+                다음 문제
+            </button>
+        </section>
+
+    </div>
+
+    <script src="game.js"></script>
+
+</body>
+</html>
