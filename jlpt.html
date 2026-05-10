@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>JLPT Word Game</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Noto Sans KR", "Yu Gothic", sans-serif;
+    background: linear-gradient(135deg, #fff1f2, #fdf2f8, #eef2ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-box {
+    width: 450px;
+    padding: 36px;
+    background: rgba(255,255,255,0.88);
+    border: 2px solid #f9a8d4;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(190, 80, 120, 0.2);
+    text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: #ffe4e6;
+    color: #be123c;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 14px;
+}
+
+h1 {
+    margin: 0 0 8px;
+    color: #9f1239;
+}
+
+.sub-title {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.lang-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.lang-buttons button {
+    background: #fff;
+    border: 1px solid #f9a8d4;
+    color: #9f1239;
+}
+
+.card {
+    background: #fff7fb;
+    border-radius: 22px;
+    padding: 26px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #fbcfe8;
+}
+
+#question {
+    font-size: 22px;
+    color: #111;
+    line-height: 1.5;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 16px;
+    border: 1px solid #f9a8d4;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+button {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.check-btn {
+    background: #fb7185;
+    color: white;
+}
+
+.next-btn {
+    background: #fce7f3;
+    color: #9f1239;
+}
+
+.back-btn {
+    background: #111827;
+    color: white;
+}
+
+#result {
+    min-height: 30px;
+    margin-top: 18px;
+    font-weight: bold;
+    color: #be123c;
+    white-space: pre-line;
+}
+
+.footer {
+    margin-top: 18px;
+    font-size: 12px;
+    color: #999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+    <div class="tag">JLPT N2 QUIZ</div>
+
+    <h1 id="title">JLPT 단어 게임</h1>
+    <div class="sub-title" id="subtitle">정답을 입력해 주세요 🌸</div>
+
+    <div class="lang-buttons">
+        <button onclick="changeLang('ko')">한국어</button>
+        <button onclick="changeLang('en')">English</button>
+    </div>
+
+    <div class="card">
+        <h2 id="question"></h2>
+    </div>
+
+    <input type="text" id="answer" placeholder="정답 입력...">
+
+    <div class="buttons">
+        <button class="check-btn" id="checkBtn" onclick="checkAnswer()">정답 확인</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">다음 문제</button>
+        <button class="back-btn" onclick="location.href='blog.html'">나가기</button>
+    </div>
+
+    <p id="result"></p>
+
+    <div class="footer">made by Subin ☕</div>
+</div>
+
+<script>
+const uiText = {
+    ko: {
+        title: "JLPT 단어 게임",
+        subtitle: "정답을 입력해 주세요 🌸",
+        placeholder: "정답 입력...",
+        check: "정답 확인",
+        next: "다음 문제",
+        correct: "정답! 🎉",
+        wrong: "틀렸어! 정답: ",
+        questionStart: "",
+        questionEnd: "의 뜻은 무엇인가요?"
+    },
+    en: {
+        title: "JLPT N2 Vocabulary",
+        subtitle: "Enter your answer 🌸",
+        placeholder: "Type answer...",
+        check: "Check",
+        next: "Next",
+        correct: "Correct! 🎉",
+        wrong: "Wrong! Answer: ",
+        questionStart: "What does ",
+        questionEnd: " mean?"
+    }
+};
+
+let currentLang = "ko";
+
+const words = [
+    "1. 浅い / あさい",
+    "2. 厚かましい / あつかましい",
+    "3. 荒い / あらい",
+    "4. 羨ましい / うらやましい",
+    "5. 偉い / えらい",
+    "6. 幼い / おさない",
+    "7. 恐ろしい / おそろしい",
+    "8. 穏やか / おだやか",
+    "9. 勝手 / かって",
+    "10. 貴重 / きちょう",
+    "11. 巨大 / きょだい",
+    "12. 急 / きゅう",
+    "13. 清らか / きよらか",
+    "14. 苦しい / くるしい",
+    "15. 詳しい / くわしい",
+    "16. 見事 / みごと",
+    "17. 公平 / こうへい",
+    "18. 正確 / せいかく",
+    "19. 細か / こまか",
+    "20. 困難 / こんなん",
+    "21. 盛ん / さかん",
+    "22. 寂しい / さびしい",
+    "23. 様々 / さまざま",
+    "24. 新鮮 / しんせん",
+    "25. 素直 / すなお",
+    "26. 鋭い / するどい",
+    "27. 退屈 / たいくつ",
+    "28. 確実 / かくじつ",
+    "29. 頼もしい / たのもしい",
+    "30. 大胆 / だいたん",
+    "31. 地味 / じみ",
+    "32. 珍しい / めずらしい",
+    "33. 当然 / とうぜん",
+    "34. 特有 / とくゆう",
+    "35. のどか / のどか",
+    "36. 熱心 / ねっしん",
+    "37. 派手 / はで",
+    "38. 秘密 / ひみつ",
+    "39. 不潔 / ふけつ",
+    "40. 不利 / ふり",
+    "41. 複雑 / ふくざつ",
+    "42. 平凡 / へいぼん",
+    "43. 真っ赤 / まっか",
+    "44. 満足 / まんぞく",
+    "45. 無理 / むり",
+    "46. 有利 / ゆうり",
+    "47. 豊か / ゆたか",
+    "48. 楽 / らく",
+    "49. 適当 / てきとう",
+    "50. 冷淡 / れいたん",
+    "51. 曖昧 / あいまい",
+    "52. 安全 / あんぜん",
+    "53. 意外 / いがい",
+    "54. 偉大 / いだい",
+    "55. 一生懸命 / いっしょうけんめい",
+    "56. 一般 / いっぱん",
+    "57. 華やか / はなやか",
+    "58. 科学的 / かがくてき",
+    "59. 活発 / かっぱつ",
+    "60. 完璧 / かんぺき",
+    "61. 気楽 / きらく",
+    "62. 厳重 / げんじゅう",
+    "63. 幸福 / こうふく",
+    "64. 最高 / さいこう",
+    "65. 最悪 / さいあく",
+    "66. 残念 / ざんねん",
+    "67. 正直 / しょうじき",
+    "68. 丈夫 / じょうぶ",
+    "69. 深刻 / しんこく",
+    "70. 素朴 / そぼく",
+    "71. 大げさ / おおげさ",
+    "72. 確実 / かくじつ",
+    "73. 地味 / じみ",
+    "74. 丁寧 / ていねい",
+    "75. 特殊 / とくしゅ",
+    "76. 突然 / とつぜん",
+    "77. 熱心 / ねっしん",
+    "78. 半分 / はんぶん",
+    "79. 不可欠 / ふかけつ",
+    "80. 不満 / ふまん",
+    "81. 平凡 / へいぼん",
+    "82. 無駄 / むだ",
+    "83. 夢中 / むちゅう",
+    "84. 有利 / ゆうり",
+    "85. 有効 / ゆうこう",
+    "86. 楽 / らく",
+    "87. 完璧 / かんぺき",
+    "88. 単純 / たんじゅん",
+    "89. 率直 / そっちょく",
+    "90. 柔軟 / じゅうなん",
+    "91. 深刻 / しんこく",
+    "92. 適切 / てきせつ",
+    "93. 必須 / ひっす",
+    "94. 貧乏 / びんぼう",
+    "95. 不要 / ふよう",
+    "96. 平均的 / へいきんてき",
+    "97. 理想的 / りそうてき",
+    "98. 冷静 / れいせい",
+    "99. 丁寧 / ていねい",
+    "100. 率直 / そっちょく"
+];
+
+const meanings = [
+    "얕다 / shallow",
+    "뻔뻔하다, 염치없다 / shameless",
+    "거칠다, 난폭하다 / rough",
+    "부럽다 / jealous",
+    "훌륭하다, 대단하다 / great",
+    "어리다, 유치하다 / young",
+    "무섭다, 두렵다 / fearful",
+    "온화하다, 평온하다 / calm",
+    "제멋대로임, 형편 / selfish",
+    "귀중하다 / precious",
+    "거대하다 / huge",
+    "급하다, 갑작스럽다 / urgent",
+    "맑고 깨끗하다 / pure",
+    "괴롭다, 고통스럽다 / painful",
+    "자세하다, 상세하다 / detailed",
+    "훌륭함, 멋짐 / splendid",
+    "공평하다, 공정하다 / fair",
+    "정확하다 / accurate",
+    "섬세함, 자잘함 / detailed",
+    "곤란하다, 어렵다 / difficult",
+    "왕성하다, 번성하다 / prosperous",
+    "외롭다, 쓸쓸하다 / lonely",
+    "가지각색, 다양함 / various",
+    "신선하다 / fresh",
+    "고분고분함, 솔직함 / honest",
+    "날카롭다, 예리하다 / sharp",
+    "지루하다, 따분하다 / boring",
+    "확실하다, 틀림없다 / certain",
+    "믿음직하다 / reliable",
+    "대담하다 / bold",
+    "수수하다, 소박하다 / plain",
+    "희귀하다, 드물다 / rare",
+    "당연하다, 마땅하다 / natural",
+    "특유하다, 고유하다 / unique",
+    "한가롭다, 평화롭다 / peaceful",
+    "열심이다, 열중하다 / enthusiastic",
+    "화려하다, 야하다 / flashy",
+    "비밀이다 / secret",
+    "불결하다, 더럽다 / dirty",
+    "불리하다 / disadvantageous",
+    "복잡하다 / complicated",
+    "평범하다 / ordinary",
+    "새빨갛다 / bright red",
+    "만족하다 / satisfied",
+    "무리하다, 불가능하다 / impossible",
+    "유리하다 / advantageous",
+    "풍요롭다, 풍부하다 / rich",
+    "편안함, 수월함 / comfortable",
+    "적당하다, 적절하다 / appropriate",
+    "냉담하다 / cold",
+    "애매하다, 모호하다 / vague",
+    "안전하다 / safe",
+    "의외이다 / unexpected",
+    "위대하다 / great",
+    "열심히, 한결같이 / hardworking",
+    "일반적이다 / general",
+    "화려하다, 찬란하다 / gorgeous",
+    "과학적이다 / scientific",
+    "활발하다 / active",
+    "완벽하다 / perfect",
+    "마음 편하다 / carefree",
+    "엄중하다, 철저하다 / strict",
+    "행복하다 / happy",
+    "최고이다 / best",
+    "최악이다 / worst",
+    "유감이다, 아쉽다 / regretful",
+    "정직하다, 솔직하다 / honest",
+    "튼튼하다 / strong",
+    "심각하다 / serious",
+    "소박하다, 순진하다 / simple",
+    "과장됨 / exaggerated",
+    "확실하다 / certain",
+    "수수하다 / plain",
+    "정중하다, 꼼꼼하다 / polite",
+    "특수하다 / special",
+    "돌연하다, 갑작스럽다 / sudden",
+    "열심이다 / enthusiastic",
+    "절반 / half",
+    "불가결하다 / essential",
+    "불만이다 / dissatisfied",
+    "평범하다 / ordinary",
+    "헛됨, 쓸데없음 / useless",
+    "열중함, 몰두함 / absorbed",
+    "유리하다 / advantageous",
+    "유효하다 / effective",
+    "편안함 / comfortable",
+    "완벽하다 / perfect",
+    "단순하다 / simple",
+    "솔직하다 / frank",
+    "유연하다 / flexible",
+    "심각하다 / serious",
+    "적절하다 / appropriate",
+    "필수적이다 / essential",
+    "가난하다 / poor",
+    "불필요하다 / unnecessary",
+    "평균적이다 / average",
+    "이상적이다 / ideal",
+    "냉정하다 / calm",
+    "정중하다 / polite",
+    "솔직하다 / frank"
+];
+
+let random = 0;
+
+function changeLang(lang) {
+    currentLang = lang;
+
+    document.getElementById("title").innerText = uiText[lang].title;
+    document.getElementById("subtitle").innerText = uiText[lang].subtitle;
+    document.getElementById("answer").placeholder = uiText[lang].placeholder;
+    document.getElementById("checkBtn").innerText = uiText[lang].check;
+    document.getElementById("nextBtn").innerText = uiText[lang].next;
+    document.getElementById("result").innerText = "";
+
+    showQuestion();
+}
+
+function showQuestion() {
+    document.getElementById("question").innerText =
+        uiText[currentLang].questionStart +
+        words[random] +
+        uiText[currentLang].questionEnd;
+}
+
+function nextQuestion() {
+    random = Math.floor(Math.random() * words.length);
+    document.getElementById("answer").value = "";
+    document.getElementById("result").innerText = "";
+    showQuestion();
+}
+
+function checkAnswer() {
+    const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    const correctAnswer = meanings[random].toLowerCase();
+
+    if (userAnswer === correctAnswer) {
+        document.getElementById("result").innerText = uiText[currentLang].correct;
+    } else {
+        document.getElementById("result").innerText =
+            uiText[currentLang].wrong + meanings[random];
+    }
+}
+
+document.getElementById("answer").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        checkAnswer();
+    }
+});
+
+changeLang("ko");
+nextQuestion();
+</script>
+
+</body>
+</html>

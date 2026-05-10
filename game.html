@@ -1,59 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Subin Java Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>DEV STUDY ROOM</title>
+
+    <style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Courier New", monospace;
+        background:
+            radial-gradient(circle at top, #1f1147 0%, transparent 35%),
+            linear-gradient(135deg, #020617, #050505);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #39ff14;
+    }
+
+    .game-box {
+        width: 470px;
+        padding: 38px;
+        background: rgba(0, 0, 0, 0.78);
+        border: 1px solid #39ff14;
+        border-radius: 22px;
+        box-shadow:
+            0 0 25px rgba(57, 255, 20, 0.35),
+            inset 0 0 25px rgba(57, 255, 20, 0.08);
+        text-align: center;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 7px 16px;
+        border: 1px solid #a855f7;
+        border-radius: 999px;
+        color: #d946ef;
+        font-size: 12px;
+        margin-bottom: 16px;
+        letter-spacing: 2px;
+    }
+
+    h1 {
+        margin: 0 0 10px;
+        font-size: 28px;
+        color: #39ff14;
+        text-shadow: 0 0 12px rgba(57,255,20,0.8);
+    }
+
+    .sub-title {
+        color: #94a3b8;
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .card {
+        background: #020617;
+        border: 1px solid rgba(57,255,20,0.6);
+        border-radius: 18px;
+        padding: 28px 20px;
+        margin-bottom: 22px;
+        box-shadow: inset 0 0 18px rgba(57,255,20,0.12);
+    }
+
+    #question {
+        font-size: 21px;
+        line-height: 1.6;
+        margin: 0;
+        color: #e0f2fe;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 12px;
+        border: 1px solid #39ff14;
+        background: #020617;
+        color: #39ff14;
+        font-size: 17px;
+        outline: none;
+        text-align: center;
+        font-family: "Courier New", monospace;
+    }
+
+    input::placeholder {
+        color: #64748b;
+    }
+
+    input:focus {
+        box-shadow: 0 0 18px rgba(57,255,20,0.7);
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    button {
+        flex: 1;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        font-family: "Courier New", monospace;
+    }
+
+    .check-btn {
+        background: #39ff14;
+        color: #020617;
+        border: 1px solid #39ff14;
+        box-shadow: 0 0 16px rgba(57,255,20,0.5);
+    }
+
+    .next-btn {
+        background: transparent;
+        color: #d946ef;
+        border: 1px solid #d946ef;
+    }
+
+    .sound-btn {
+        margin-top: 12px;
+        width: 100%;
+        background: transparent;
+        color: #22d3ee;
+        border: 1px solid #22d3ee;
+        box-shadow: 0 0 12px rgba(34,211,238,0.35);
+    }
+
+    #result {
+        min-height: 42px;
+        margin-top: 18px;
+        font-weight: bold;
+        line-height: 1.6;
+        white-space: pre-line;
+        color: #facc15;
+    }
+
+    .score {
+        margin-top: 12px;
+        color: #c4b5fd;
+        font-size: 14px;
+    }
+
+    .footer {
+        margin-top: 18px;
+        font-size: 12px;
+        color: #64748b;
+    }
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="game-box">
+    <div class="tag">DEV STUDY ROOM</div>
+    <h1>코딩 테스트 연습</h1>
+    <div class="sub-title">개발하면서 자주 만나는 단어를 맞혀보자</div>
 
-        <header>
-            <div class="logo">SUBINLEE</div>
-
-            <nav>
-    <a href="index.html">HOME</a>
-    <a href="blog.html">BLOG</a>
-    <a href="about.html">ABOUT</a>
-    <a href="game.html">GAME</a>
-    <a href="word.html">JLPT</a>
-    <a href="word.html">CONTACT</a>
-</nav>
-        </header>
-
-        <div class="language-buttons">
-            <button onclick="setGameLanguage('ko')">🇰🇷</button>
-            <button onclick="setGameLanguage('en')">🇺🇸</button>
-            <button onclick="setGameLanguage('jp')">🇯🇵</button>
-        </div>
-
-        <section class="game-box">
-            <h1 id="game-title">Java 퀴즈 게임</h1>
-
-            <p id="game-intro">
-                Java 기초 문제를 풀어보세요 ☕
-            </p>
-
-            <h2 id="question">문제가 여기에 나옵니다.</h2>
-
-            <div class="answer-box">
-                <button onclick="checkAnswer(0)" id="btn0"></button>
-                <button onclick="checkAnswer(1)" id="btn1"></button>
-                <button onclick="checkAnswer(2)" id="btn2"></button>
-            </div>
-
-            <p id="result"></p>
-            <p id="score">Score: 0</p>
-
-            <button class="next-btn" onclick="nextQuestion()" id="next-btn">
-                다음 문제
-            </button>
-        </section>
-
+    <div class="card">
+        <h2 id="question"></h2>
     </div>
 
-    <script src="game.js"></script>
+    <input type="text" id="answer" placeholder="영어로 입력해보세요">
+
+    <button class="sound-btn" onclick="speakWord()">🔊 정답 발음 듣기</button>
+
+<div class="buttons">
+    <button class="check-btn" onclick="checkAnswer()">정답 확인</button>
+    <button class="next-btn" onclick="nextQuestion()">다음 문제</button>
+
+    <a href="blog.html">
+        <button class="back-btn">나가기</button>
+    </a>
+</div>
+
+    <p id="result"></p>
+    <div class="score" id="score">점수: 0 / 0</div>
+    <div class="footer">틀려도 괜찮음. 우리 같이 외우는 중 ☕</div>
+</div>
+
+<script>
+    const words = [
+        { question: "변수를 영어로 뭐라고 할까?", answer: "variable" },
+        { question: "함수를 영어로 뭐라고 할까?", answer: "function" },
+        { question: "문자열을 영어로 뭐라고 할까?", answer: "string" },
+        { question: "참/거짓 값을 가진 자료형은?", answer: "boolean" },
+        { question: "배열을 영어로 뭐라고 할까?", answer: "array" },
+        { question: "반복문을 영어로 뭐라고 할까?", answer: "loop" },
+        { question: "조건문을 영어로 뭐라고 할까?", answer: "condition" },
+        { question: "오류를 영어로 뭐라고 할까?", answer: "error" },
+        { question: "에러 원인을 찾고 고치는 작업은?", answer: "debug" },
+        { question: "코드를 실행 가능한 형태로 바꾸는 것은?", answer: "compile" },
+        { question: "서비스를 실제 서버에 올리는 것은?", answer: "deploy" },
+        { question: "서버에 보내는 요청은?", answer: "request" },
+        { question: "서버가 보내는 응답은?", answer: "response" },
+        { question: "GitHub에 코드를 올릴 때 쓰는 명령어는?", answer: "git push" },
+        { question: "코드를 저장소에 기록하는 Git 명령어는?", answer: "git commit" },
+        { question: "코드를 내려받을 때 쓰는 Git 명령어는?", answer: "git pull" },
+        { question: "작업 흐름을 나누는 Git 공간은?", answer: "branch" },
+        { question: "JavaScript에서 콘솔에 출력하는 코드는?", answer: "console.log" },
+        { question: "랜덤 숫자를 만들 때 쓰는 JavaScript 함수는?", answer: "Math.random" },
+        { question: "HTML에서 버튼을 만드는 태그는?", answer: "button" },
+        { question: "CSS에서 글자색을 바꾸는 속성은?", answer: "color" },
+        { question: "CSS에서 배경색을 바꾸는 속성은?", answer: "background" },
+        { question: "데이터를 저장하는 공간은?", answer: "database" },
+        { question: "명령어를 입력하는 창은?", answer: "terminal" },
+        { question: "코드를 저장하는 저장소는?", answer: "repository" }
+    ];
+
+    let random = 0;
+    let correct = 0;
+    let total = 0;
+    let answered = false;
+
+    function nextQuestion() {
+        random = Math.floor(Math.random() * words.length);
+        answered = false;
+
+        document.getElementById("question").innerText = words[random].question;
+        document.getElementById("answer").value = "";
+        document.getElementById("result").innerText = "";
+        document.getElementById("answer").focus();
+    }
+
+    function checkAnswer() {
+        if (answered) {
+            return;
+        }
+
+        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+        const correctAnswer = words[random].answer.toLowerCase();
+
+        total++;
+        answered = true;
+
+        if (userAnswer === correctAnswer) {
+            correct++;
+            document.getElementById("result").innerText = "정답! 🎉";
+        } else {
+            document.getElementById("result").innerText =
+                "틀렸어!\n정답: " + words[random].answer;
+        }
+
+        document.getElementById("score").innerText = "점수: " + correct + " / " + total;
+    }
+
+    function speakWord() {
+        const speech = new SpeechSynthesisUtterance(words[random].answer);
+        speech.lang = "en-US";
+        speech.rate = 0.8;
+        window.speechSynthesis.speak(speech);
+    }
+
+    document.getElementById("answer").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+    });
+
+    nextQuestion();
+
+                  
+</script>
 
 </body>
 </html>
